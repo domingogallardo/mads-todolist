@@ -1,0 +1,36 @@
+@(usuarios: List[Usuario], mensaje: String)
+@scripts = {
+    <script type="text/javascript">
+        function del(urlBorrar) {
+            $.ajax({
+                url: urlBorrar,
+                type: 'DELETE',
+                success: function(results) {
+                    //refresh the page
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}
+@main("Listado de usuarios", scripts) {
+
+    <h2> Listado de usuarios </h2>
+
+    <!-- ... -->
+
+    @for(usuario <- usuarios) {
+        <!-- .... -->
+        <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.Usuarios.borraUsuario(usuario.id)')">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+        <!-- ... -->
+      }
+
+    <!-- ... -->
+
+    @if(mensaje != null) {
+        <div class="alert alert-success">
+            @mensaje
+        </div>
+    }
+}
