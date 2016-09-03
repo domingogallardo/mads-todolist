@@ -21,7 +21,7 @@
 
     @for(usuario <- usuarios) {
         <!-- .... -->
-        <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.Usuarios.borraUsuario(usuario.id)')">
+        <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">
         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
         <!-- ... -->
       }

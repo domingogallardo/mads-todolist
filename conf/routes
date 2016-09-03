@@ -10,13 +10,13 @@ GET     /count                      controllers.CountController.count
 GET     /message                    controllers.AsyncController.message
 
 GET     /saludo                     controllers.ApplicationController.saludo(nombre: String)
-GET     /usuarios                   controllers.Usuarios.listaUsuarios()
-GET     /usuarios/nuevo             controllers.Usuarios.formularioNuevoUsuario()
-POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario()
-POST    /usuarios/modifica          controllers.Usuarios.grabaUsuarioModificado()
-GET     /usuarios/:id               controllers.Usuarios.detalleUsuario(id: String)
-GET     /usuarios/:id/editar        controllers.Usuarios.editarUsuario(id: String)
-DELETE  /usuarios/:id               controllers.Usuarios.borraUsuario(id: String)
+GET     /usuarios                   controllers.UsuariosController.listaUsuarios()
+GET     /usuarios/nuevo             controllers.UsuariosController.formularioNuevoUsuario()
+POST    /usuarios/nuevo             controllers.UsuariosController.grabaNuevoUsuario()
+POST    /usuarios/modifica          controllers.UsuariosController.grabaUsuarioModificado()
+GET     /usuarios/:id               controllers.UsuariosController.detalleUsuario(id: String)
+GET     /usuarios/:id/editar        controllers.UsuariosController.editaUsuario(id: String)
+DELETE  /usuarios/:id               controllers.UsuariosController.borraUsuario(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
