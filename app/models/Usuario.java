@@ -27,8 +27,10 @@ public class Usuario {
       return id;
     }
 
+    // Una cadena vacía se guarda como null.
+    // JPA guarda este valor en la BD.
     public void setLogin(String login) {
-      this.login = login;
+      this.login = (login != "") ? login : null;
     }
 
     public String getLogin() {
@@ -36,7 +38,7 @@ public class Usuario {
     }
 
     public void setNombre(String nombre) {
-      this.nombre = nombre;
+      this.nombre = (nombre != "") ? nombre : null;
     }
 
     public String getNombre() {
@@ -44,7 +46,7 @@ public class Usuario {
     }
 
     public void setApellidos(String apellidos) {
-      this.apellidos = apellidos;
+      this.apellidos = (apellidos != "") ? apellidos : null;
     }
 
     public String getApellidos() {
@@ -52,7 +54,7 @@ public class Usuario {
     }
 
     public void setEMail(String eMail) {
-      this.eMail = eMail;
+      this.eMail = (eMail != "") ? eMail : null;
     }
 
     public String getEMail() {
@@ -65,14 +67,6 @@ public class Usuario {
 
     public Date getFechaNacimiento() {
       return fechaNacimiento;
-    }
-
-    // Sustituye por null todas las cadenas vacías que pueda tener
-    // un usuario en sus atributos
-    public void nulificaAtributos() {
-        if (nombre != null && nombre.isEmpty()) nombre = null;
-        if (apellidos != null && apellidos.isEmpty()) apellidos = null;
-        if (eMail != null && eMail.isEmpty()) eMail = null;
     }
 
     public String toString() {

@@ -17,16 +17,16 @@
 
     <h2> Listado de usuarios </h2>
 
-    <!-- ... -->
-
+    <ul>
     @for(usuario <- usuarios) {
-        <!-- .... -->
-        <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-        <!-- ... -->
+        <li>
+          Usuario @usuario.getId(): @usuario.getLogin()
+          <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.UsuariosController.borraUsuario(usuario.getId)')">
+            <!--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> --> (Borrar)</a>
+        </li>
       }
 
-    <!-- ... -->
+    </ul>
 
     @if(mensaje != null) {
         <div class="alert alert-success">

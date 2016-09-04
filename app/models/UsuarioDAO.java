@@ -3,12 +3,12 @@ package models;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Date;
 
 public class UsuarioDAO {
     public static Usuario create (Usuario usuario) {
-        usuario.nulificaAtributos();
         JPA.em().persist(usuario);
         // Hacemos un flush y un refresh para asegurarnos de que se realiza
         // la creación en la BD y se devuelve el id inicializado
@@ -32,6 +32,8 @@ public class UsuarioDAO {
     }
 
     public static List<Usuario> findAll() {
-        return (List<Usuario>) JPA.em().createQuery("select u from Usuario u ORDER BY id").getResultList();
+        TypedQuery<Usuario> query = JPA.em().createQuery(
+                  "select u from Usuario u ORDER BY id", Usuario.class);
+        return query.getResultList();
     }
 }

@@ -30,7 +30,8 @@ public class UsuariosService {
     }
 
     public static List<Usuario> findAllUsuarios() {
-        // ToDo
-        return new ArrayList<Usuario>();
+        List<Usuario> lista = UsuarioDAO.findAll();
+        Logger.debug("Numero de usuarios: " + lista.size());
+        return lista;
     }
 }

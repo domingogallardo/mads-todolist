@@ -43,8 +43,6 @@ public class UsuariosController extends Controller {
             return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
         }
         Usuario usuario = usuarioForm.get();
-        // nulificaAtributos cambia cadenas vacías por null, necesario para JPA
-        usuario.nulificaAtributos();
         Logger.debug("Usuario a grabar: " + usuario.toString());
         usuario = UsuariosService.grabaUsuario(usuario);
         flash("grabaUsuario", "El usuario se ha grabado correctamente");
