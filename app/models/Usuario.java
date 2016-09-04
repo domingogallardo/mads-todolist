@@ -12,14 +12,60 @@ import java.text.SimpleDateFormat;
 public class Usuario {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    public String id;
-    @Constraints.Required
-    public String login;
-    public String nombre;
-    public String apellidos;
-    public String eMail;
+    protected String id;
+    protected String login;
+    protected String nombre;
+    protected String apellidos;
+    protected String eMail;
     @Formats.DateTime(pattern="dd-MM-yyyy")
-    public Date fechaNacimiento;
+    protected Date fechaNacimiento;
+
+    // No definimos un setter para id, porque será
+    // generado automáticamente por la base de datos
+
+    public String getId() {
+      return id;
+    }
+
+    public void setLogin(String login) {
+      this.login = login;
+    }
+
+    public String getLogin() {
+      return login;
+    }
+
+    public void setNombre(String nombre) {
+      this.nombre = nombre;
+    }
+
+    public String getNombre() {
+      return nombre;
+    }
+
+    public void setApellidos(String apellidos) {
+      this.apellidos = apellidos;
+    }
+
+    public String getApellidos() {
+      return apellidos;
+    }
+
+    public void setEMail(String eMail) {
+      this.eMail = eMail;
+    }
+
+    public String getEMail() {
+      return eMail;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+      this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Date getFechaNacimiento() {
+      return fechaNacimiento;
+    }
 
     // Sustituye por null todas las cadenas vacías que pueda tener
     // un usuario en sus atributos
