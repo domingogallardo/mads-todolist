@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class UsuarioDAO {
     public static Usuario create (Usuario usuario) {
+        usuario.nulificaAtributos();
         JPA.em().persist(usuario);
         // Hacemos un flush y un refresh para asegurarnos de que se realiza
         // la creación en la BD y se devuelve el id inicializado
