@@ -15,7 +15,6 @@ public class Usuario {
     public String id;
     @Constraints.Required
     public String login;
-    @Constraints.Required
     public String password;
     public String nombre;
     public String apellidos;
