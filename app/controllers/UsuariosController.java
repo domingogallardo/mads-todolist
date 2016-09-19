@@ -1,11 +1,13 @@
 package controllers;
 
+import play.*;
 import play.mvc.*;
 import play.data.Form;
 import play.data.FormFactory;
 import play.db.jpa.*;
 
 import models.*;
+import services.*;
 
 import views.html.*;
 
@@ -30,6 +32,13 @@ public class UsuariosController extends Controller {
 
     @Transactional
     public Result grabaNuevoUsuario() {
-        return ok("No implementado");
+        Form<Usuario> usuarioForm = formFactory.form(Usuario.class).bindFromRequest();
+        if (usuarioForm.hasErrors()) {
+            return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+        }
+        Usuario usuario = usuarioForm.get();
+        Logger.debug("Usuario a grabar: " + usuario.toString());
+        usuario = UsuariosService.grabaUsuario(usuario);
+        return ok("Usuario grabado");
     }
 }
