@@ -13,6 +13,8 @@ GET     /saludo                     controllers.ApplicationController.saludo(nom
 GET     /usuarios/nuevo             controllers.UsuariosController.formularioNuevoUsuario()
 POST    /usuarios/nuevo             controllers.UsuariosController.grabaNuevoUsuario()
 GET     /usuarios                   controllers.UsuariosController.listaUsuarios()
+GET     /usuarios/:id               controllers.UsuariosController.detalleUsuario(id: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

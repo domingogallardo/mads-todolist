@@ -12,6 +12,7 @@ import services.*;
 import views.html.*;
 
 import javax.inject.*;
+import java.util.List;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -23,7 +24,9 @@ public class UsuariosController extends Controller {
 
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
-        return ok("No implementado");
+        String mensaje = flash("grabaUsuario");
+        List<Usuario> usuarios = UsuariosService.findAllUsuarios();
+        return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
     public Result formularioNuevoUsuario() {
@@ -39,6 +42,12 @@ public class UsuariosController extends Controller {
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
         usuario = UsuariosService.grabaUsuario(usuario);
-        return ok("Usuario grabado");
+        flash("grabaUsuario", "El usuario se ha grabado correctamente");
+        return redirect(controllers.routes.UsuariosController.listaUsuarios());
+    }
+
+    @Transactional
+    public Result detalleUsuario(String id) {
+        return ok("Detalle del usuario: " + id);
     }
 }
