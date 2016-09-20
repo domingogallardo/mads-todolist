@@ -25,7 +25,7 @@ public class UsuariosController extends Controller {
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
         List<Usuario> usuarios = UsuariosService.findAllUsuarios();
-        return ok("Listado usuarios");
+        return ok(listaUsuarios.render(usuarios, null));
     }
 
     public Result formularioNuevoUsuario() {
