@@ -45,4 +45,9 @@ public class UsuariosController extends Controller {
         flash("grabaUsuario", "El usuario se ha grabado correctamente");
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
+
+    @Transactional
+    public Result detalleUsuario(String id) {
+        return ok("Detalle del usuario: " + id);
+    }
 }
