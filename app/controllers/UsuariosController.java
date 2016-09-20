@@ -50,6 +50,6 @@ public class UsuariosController extends Controller {
     public Result detalleUsuario(String id) {
         Usuario usuario = UsuariosService.findUsuario(id);
         Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
-        return ok("Detalle del usuario: " + id);
+        return ok(detalleUsuario.render(usuario));
     }
 }
