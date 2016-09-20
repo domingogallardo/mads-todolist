@@ -24,8 +24,9 @@ public class UsuariosController extends Controller {
 
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
+        String mensaje = flash("grabaUsuario");
         List<Usuario> usuarios = UsuariosService.findAllUsuarios();
-        return ok(listaUsuarios.render(usuarios, null));
+        return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
     public Result formularioNuevoUsuario() {
@@ -41,6 +42,7 @@ public class UsuariosController extends Controller {
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
         usuario = UsuariosService.grabaUsuario(usuario);
-        return ok("Usuario grabado");
+        flash("grabaUsuario", "El usuario se ha grabado correctamente");
+        return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 }
