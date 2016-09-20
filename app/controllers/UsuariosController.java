@@ -46,8 +46,10 @@ public class UsuariosController extends Controller {
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Result detalleUsuario(String id) {
-        return ok("Detalle del usuario: " + id);
+        Usuario usuario = UsuariosService.findUsuario(id);
+        Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
+        return ok(detalleUsuario.render(usuario));
     }
 }
