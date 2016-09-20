@@ -12,6 +12,7 @@ import services.*;
 import views.html.*;
 
 import javax.inject.*;
+import java.util.List;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -23,7 +24,8 @@ public class UsuariosController extends Controller {
 
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
-        return ok("No implementado");
+        List<Usuario> usuarios = UsuariosService.findAllUsuarios();
+        return ok("Listado usuarios");
     }
 
     public Result formularioNuevoUsuario() {
