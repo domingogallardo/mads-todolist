@@ -52,4 +52,21 @@ public class UsuariosController extends Controller {
         Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
         return ok(detalleUsuario.render(usuario));
     }
+
+    @Transactional
+    public Result grabaUsuarioModificado() {
+        return ok("No implementado");
+    }
+
+    @Transactional
+    public Result editaUsuario(String id) {
+        Usuario usuario = UsuariosService.findUsuario(id);
+        if (usuario == null) {
+            return ok("Usuario no encontrado");
+        } else {
+            Form<Usuario> usuarioForm = formFactory.form(Usuario.class);
+            usuarioForm = usuarioForm.fill(usuario);
+            return ok(formModificacionUsuario.render(usuarioForm, ""));
+        }
+    }
 }
