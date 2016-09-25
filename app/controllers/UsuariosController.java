@@ -25,6 +25,8 @@ public class UsuariosController extends Controller {
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
         String mensaje = flash("grabaUsuario");
+        if (mensaje == null)
+            mensaje = flash("grabaUsuarioModificado");
         List<Usuario> usuarios = UsuariosService.findAllUsuarios();
         return ok(listaUsuarios.render(usuarios, mensaje));
     }
@@ -51,5 +53,30 @@ public class UsuariosController extends Controller {
         Usuario usuario = UsuariosService.findUsuario(id);
         Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
         return ok(detalleUsuario.render(usuario));
+    }
+
+    @Transactional
+    public Result grabaUsuarioModificado() {
+        Form<Usuario> usuarioForm = formFactory.form(Usuario.class).bindFromRequest();
+        if (usuarioForm.hasErrors()) {
+            return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+        }
+        Usuario usuario = usuarioForm.get();
+        Logger.debug("Usuario a grabar: " + usuario.toString());
+        usuario = UsuariosService.modificaUsuario(usuario);
+        flash("grabaUsuarioModificado", "Usuario " + usuario.id + " modificado");
+        return redirect(controllers.routes.UsuariosController.listaUsuarios());
+    }
+
+    @Transactional
+    public Result editaUsuario(String id) {
+        Usuario usuario = UsuariosService.findUsuario(id);
+        if (usuario == null) {
+            return ok("Usuario no encontrado");
+        } else {
+            Form<Usuario> usuarioForm = formFactory.form(Usuario.class);
+            usuarioForm = usuarioForm.fill(usuario);
+            return ok(formModificacionUsuario.render(usuarioForm, ""));
+        }
     }
 }

@@ -15,8 +15,8 @@ public class UsuariosService {
     }
 
     public static Usuario modificaUsuario(Usuario usuario) {
-      // ToDo
-      return usuario;
+        UsuarioDAO.update(usuario);
+        return usuario;
     }
 
     public static Usuario findUsuario(String id) {

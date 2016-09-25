@@ -31,7 +31,8 @@
             <td>@usuario.login</td>
             <td>@usuario.nombre</td>
             <td>@usuario.apellidos</td>
-            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a></td>
+            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a> 
+                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">Editar</a></td>
         </tr>
       }
 
