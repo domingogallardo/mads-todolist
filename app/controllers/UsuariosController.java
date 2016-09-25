@@ -25,6 +25,8 @@ public class UsuariosController extends Controller {
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
         String mensaje = flash("grabaUsuario");
+        if (mensaje == null)
+            mensaje = flash("grabaUsuarioModificado");
         List<Usuario> usuarios = UsuariosService.findAllUsuarios();
         return ok(listaUsuarios.render(usuarios, mensaje));
     }
@@ -55,7 +57,15 @@ public class UsuariosController extends Controller {
 
     @Transactional
     public Result grabaUsuarioModificado() {
-        return ok("No implementado");
+        Form<Usuario> usuarioForm = formFactory.form(Usuario.class).bindFromRequest();
+        if (usuarioForm.hasErrors()) {
+            return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+        }
+        Usuario usuario = usuarioForm.get();
+        Logger.debug("Usuario a grabar: " + usuario.toString());
+        usuario = UsuariosService.modificaUsuario(usuario);
+        flash("grabaUsuarioModificado", "Usuario " + usuario.id + " modificado");
+        return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 
     @Transactional
