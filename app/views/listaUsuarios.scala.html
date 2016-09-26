@@ -1,4 +1,4 @@
-@(usuarios: List[Usuario], mensaje: String)
+@(usuarios: List[Usuario], mensaje: String, error: String)
 @scripts = {
     <script type="text/javascript">
         function del(urlBorrar) {
@@ -6,6 +6,7 @@
                 url: urlBorrar,
                 type: 'DELETE',
                 success: function(results) {
+                    //refresh the page
                     location.reload();
                 }
             });
@@ -32,7 +33,9 @@
             <td>@usuario.apellidos</td>
             <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a>
                 <a href="@routes.UsuariosController.editaUsuario(usuario.id)">Editar</a>
-                <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">Borrar</a></td>
+                <a onmouseover="" style="cursor: pointer;"
+                onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
       }
 
@@ -41,6 +44,11 @@
     @if(mensaje != null) {
         <div class="alert alert-success">
             @mensaje
+        </div>
+    }
+    @if(error != null) {
+        <div class="alert alert-danger">
+            @error
         </div>
     }
 }

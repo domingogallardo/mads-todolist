@@ -23,9 +23,11 @@ public class UsuariosService {
         return UsuarioDAO.find(id);
     }
 
-    public static boolean deleteUsuario(String id) {
-        // ToDo
-        return false;
+    public static void deleteUsuario(String id) {
+        Usuario usuario = UsuarioDAO.find(id);
+        if (usuario == null)
+            throw new RuntimeException("No existe usuario " + id);
+        UsuarioDAO.delete(id);
     }
 
     public static List<Usuario> findAllUsuarios() {
