@@ -79,4 +79,10 @@ public class UsuariosController extends Controller {
             return ok(formModificacionUsuario.render(usuarioForm, ""));
         }
     }
+
+    @Transactional
+    public Result borraUsuario(String id) {
+        Logger.debug("Voy a borrar el usuario: " + id);
+        return ok("Voy a borrra el usuario: " + id);
+    }
 }

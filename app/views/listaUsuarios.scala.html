@@ -6,7 +6,6 @@
                 url: urlBorrar,
                 type: 'DELETE',
                 success: function(results) {
-                    //refresh the page
                     location.reload();
                 }
             });
@@ -31,8 +30,9 @@
             <td>@usuario.login</td>
             <td>@usuario.nombre</td>
             <td>@usuario.apellidos</td>
-            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a> 
-                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">Editar</a></td>
+            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a>
+                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">Editar</a>
+                <a onmouseover="" style="cursor: pointer;" onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">Borrar</a></td>
         </tr>
       }
 
