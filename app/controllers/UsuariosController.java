@@ -122,6 +122,14 @@ public class UsuariosController extends Controller {
 
     @Transactional(readOnly = true)
     public Result login() {
-        return ok(saludo.render("Hola"));
+        Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(formLogin.render(loginForm, "Hay errores en el formulario"));
+        }
+        Login login = loginForm.get();
+        Usuario usuario = UsuariosService.login(login.login, login.password);
+        if (usuario == null)
+            return badRequest(formLogin.render(loginForm, "Error al logearse"));
+        return ok(saludo.render(usuario.login + " - " + usuario.nombre));
     }
 }
