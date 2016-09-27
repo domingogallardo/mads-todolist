@@ -38,9 +38,10 @@ public class UsuariosService {
 
     public static Usuario registraUsuario(Usuario nuevoUsuario) {
         Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(nuevoUsuario.login);
-        if (usuarioIgualLogin == null)
-            return nuevoUsuario;
-        else
-            return null;
+        if (usuarioIgualLogin == null) {
+            return grabaUsuario(nuevoUsuario);
+        }
+        // el login ya existe
+        else return null;
     }
 }
