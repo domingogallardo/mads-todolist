@@ -94,4 +94,20 @@ public class UsuariosController extends Controller {
         }
         return ok();
     }
+
+    public Result formularioRegistro() {
+        return ok(formRegistro.render(formFactory.form(Registro.class),""));
+    }
+
+    public Result registroUsuario() {
+        Form<Registro> registroForm = formFactory.form(Registro.class).bindFromRequest();
+        if (registroForm.hasErrors()) {
+            return badRequest(formRegistro.render(registroForm, "Hay errores en el formulario"));
+        }
+        Registro registro = registroForm.get();
+        if (!registro.password.equals(registro.confirmacion)) {
+            return badRequest(formRegistro.render(registroForm, "No coincide la contraseña y la confirmación"));
+        }
+        return ok(saludo.render(registro.login));
+    }
 }
