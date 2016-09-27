@@ -35,4 +35,12 @@ public class UsuariosService {
         Logger.debug("Numero de usuarios: " + lista.size());
         return lista;
     }
+
+    public static Usuario registraUsuario(Usuario nuevoUsuario) {
+        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(nuevoUsuario.login);
+        if (usuarioIgualLogin == null)
+            return nuevoUsuario;
+        else
+            return null;
+    }
 }

@@ -99,6 +99,7 @@ public class UsuariosController extends Controller {
         return ok(formRegistro.render(formFactory.form(Registro.class),""));
     }
 
+    @Transactional
     public Result registroUsuario() {
         Form<Registro> registroForm = formFactory.form(Registro.class).bindFromRequest();
         if (registroForm.hasErrors()) {
@@ -108,6 +109,10 @@ public class UsuariosController extends Controller {
         if (!registro.password.equals(registro.confirmacion)) {
             return badRequest(formRegistro.render(registroForm, "No coincide la contraseña y la confirmación"));
         }
-        return ok(saludo.render(registro.login));
+        Usuario nuevoUsuario = new Usuario(registro.login, registro.password);
+        nuevoUsuario = UsuariosService.registraUsuario(nuevoUsuario);
+        if (nuevoUsuario == null) {
+            return badRequest(formRegistro.render(registroForm, "El login ya existe"));
+        } else return ok(saludo.render(registro.login));
     }
 }

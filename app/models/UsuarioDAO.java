@@ -37,4 +37,15 @@ public class UsuarioDAO {
                   "select u from Usuario u ORDER BY id", Usuario.class);
         return query.getResultList();
     }
+
+    public static Usuario findUsuarioPorLogin(String login) {
+        TypedQuery<Usuario> query = JPA.em().createQuery(
+                  "select u from Usuario u where u.login = :login", Usuario.class);
+        try {
+            Usuario usuario = query.setParameter("login", login).getSingleResult();
+            return usuario;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }
