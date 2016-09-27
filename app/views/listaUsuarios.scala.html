@@ -31,8 +31,10 @@
             <td>@usuario.login</td>
             <td>@usuario.nombre</td>
             <td>@usuario.apellidos</td>
-            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">Detalle</a>
-                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">Editar</a>
+            <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">
+                <span class="glyphicon glyphicon-eye-open"></span></a> &nbsp;
+                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">
+                    <span class="glyphicon glyphicon-pencil"></span></a> &nbsp;
                 <a onmouseover="" style="cursor: pointer;"
                 onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
