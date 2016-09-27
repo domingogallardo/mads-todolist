@@ -10,8 +10,8 @@
         <fieldset>
             <legend>Registro usuario</legend>
             @helper.inputText(registroForm("login"), '_label -> "Login")
-            @helper.inputText(registroForm("password"), '_label -> "Contraseña")
-            @helper.inputText(registroForm("confirmacion"), '_label -> "Repite contraseña")
+            @helper.inputPassword(registroForm("password"), '_label -> "Contraseña")
+            @helper.inputPassword(registroForm("confirmacion"), '_label -> "Repite contraseña")
         </fieldset>
         <p>
         <input type="submit" class="btn btn-primary" value="Guardar">
