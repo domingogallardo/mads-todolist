@@ -115,4 +115,13 @@ public class UsuariosController extends Controller {
             return badRequest(formRegistro.render(registroForm, "El login ya existe"));
         } else return ok(saludo.render(registro.login));
     }
+
+    public Result formularioLogin() {
+        return ok(formLogin.render(formFactory.form(Login.class), ""));
+    }
+
+    @Transactional(readOnly = true)
+    public Result login() {
+        return ok(saludo.render("Hola"));
+    }
 }
