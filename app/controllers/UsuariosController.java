@@ -64,6 +64,12 @@ public class UsuariosController extends Controller {
         }
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
+
+        // Se recupera la contraseña del usuario y se actualiza en el
+        // usuario modificado
+        Usuario usuarioSinModificar = UsuariosService.findUsuario(usuario.id);
+        usuario.password = usuarioSinModificar.password;
+
         usuario = UsuariosService.modificaUsuario(usuario);
         flash("aviso", "Usuario " + usuario.id + " modificado");
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
