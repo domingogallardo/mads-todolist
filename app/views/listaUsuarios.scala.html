@@ -33,7 +33,7 @@
             <td>@usuario.apellidos</td>
             <td><a href="@routes.UsuariosController.detalleUsuario(usuario.id)">
                 <span class="glyphicon glyphicon-eye-open"></span></a> &nbsp;
-                <a href="@routes.UsuariosController.editaUsuario(usuario.id)">
+                <a href="@routes.UsuariosController.formularioEditaUsuario(usuario.id)">
                     <span class="glyphicon glyphicon-pencil"></span></a> &nbsp;
                 <a onmouseover="" style="cursor: pointer;"
                 onclick="del('@routes.UsuariosController.borraUsuario(usuario.id)')">

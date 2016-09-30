@@ -24,9 +24,6 @@ public class UsuariosService {
     }
 
     public static void deleteUsuario(String id) {
-        Usuario usuario = UsuarioDAO.find(id);
-        if (usuario == null)
-            throw new RuntimeException("No existe usuario " + id);
         UsuarioDAO.delete(id);
     }
 

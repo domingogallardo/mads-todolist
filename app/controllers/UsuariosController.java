@@ -52,8 +52,12 @@ public class UsuariosController extends Controller {
     @Transactional(readOnly = true)
     public Result detalleUsuario(String id) {
         Usuario usuario = UsuariosService.findUsuario(id);
-        Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
-        return ok(detalleUsuario.render(usuario));
+        if (usuario == null) {
+            return notFound("Usuario no encontrado");
+        } else {
+            Logger.debug("Encontrado usuario " + usuario.id + ": " + usuario.login);
+            return ok(detalleUsuario.render(usuario));
+        }
     }
 
     @Transactional
@@ -75,11 +79,11 @@ public class UsuariosController extends Controller {
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 
-    @Transactional
-    public Result editaUsuario(String id) {
+    @Transactional(readOnly = true)
+    public Result formularioEditaUsuario(String id) {
         Usuario usuario = UsuariosService.findUsuario(id);
         if (usuario == null) {
-            return ok("Usuario no encontrado");
+            return notFound("Usuario no encontrado");
         } else {
             Form<Usuario> usuarioForm = formFactory.form(Usuario.class);
             usuarioForm = usuarioForm.fill(usuario);
@@ -90,52 +94,8 @@ public class UsuariosController extends Controller {
     @Transactional
     public Result borraUsuario(String id) {
         Logger.debug("Voy a borrar el usuario: " + id);
-        try {
-            UsuariosService.deleteUsuario(id);
-            flash("aviso", "Usuario " + id + " borrado correctamente");
-        } catch (Exception ex) {
-            String errorMsg = ex.getMessage();
-            System.err.println("Excepción: " + errorMsg);
-            flash("error", errorMsg);
-        }
+        UsuariosService.deleteUsuario(id);
+        flash("aviso", "Usuario " + id + " borrado correctamente");
         return ok();
-    }
-
-    public Result formularioRegistro() {
-        return ok(formRegistro.render(formFactory.form(Registro.class),""));
-    }
-
-    @Transactional
-    public Result registroUsuario() {
-        Form<Registro> registroForm = formFactory.form(Registro.class).bindFromRequest();
-        if (registroForm.hasErrors()) {
-            return badRequest(formRegistro.render(registroForm, "Hay errores en el formulario"));
-        }
-        Registro registro = registroForm.get();
-        if (!registro.password.equals(registro.confirmacion)) {
-            return badRequest(formRegistro.render(registroForm, "No coincide la contraseña y la confirmación"));
-        }
-        Usuario nuevoUsuario = new Usuario(registro.login, registro.password);
-        nuevoUsuario = UsuariosService.registraUsuario(nuevoUsuario);
-        if (nuevoUsuario == null) {
-            return badRequest(formRegistro.render(registroForm, "El login ya existe"));
-        } else return ok(saludo.render(registro.login));
-    }
-
-    public Result formularioLogin() {
-        return ok(formLogin.render(formFactory.form(Login.class), ""));
-    }
-
-    @Transactional(readOnly = true)
-    public Result login() {
-        Form<Login> loginForm = formFactory.form(Login.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return badRequest(formLogin.render(loginForm, "Hay errores en el formulario"));
-        }
-        Login login = loginForm.get();
-        Usuario usuario = UsuariosService.login(login.login, login.password);
-        if (usuario == null)
-            return badRequest(formLogin.render(loginForm, "Error al logearse"));
-        return ok(saludo.render(usuario.login + " - " + usuario.nombre));
     }
 }

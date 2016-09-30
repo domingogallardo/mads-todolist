@@ -6,7 +6,7 @@
         </div>
     }
     <h1>Login</h1>
-    @helper.form(action = routes.UsuariosController.login()) {
+    @helper.form(action = routes.LoginController.login()) {
         <fieldset>
             <legend>Introduce usuario y contraseña</legend>
             @helper.inputText(loginForm("login"), '_label -> "Login")
@@ -14,6 +14,6 @@
         </fieldset>
         <p>
         <input type="submit" class="btn btn-primary" value="Entrar">
-        <a class="btn btn-primary" href="@routes.UsuariosController.registroUsuario()">Registro</a></p>
+        <a class="btn btn-primary" href="@routes.LoginController.registroUsuario()">Registro</a></p>
     }
 }
