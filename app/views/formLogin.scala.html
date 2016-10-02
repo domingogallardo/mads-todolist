@@ -6,14 +6,19 @@
         </div>
     }
     <h1>Login</h1>
-    @helper.form(action = routes.LoginController.login()) {
-        <fieldset>
-            <legend>Introduce usuario y contraseña</legend>
-            @helper.inputText(loginForm("login"), '_label -> "Login")
-            @helper.inputPassword(loginForm("password"), '_label -> "Contraseña")
-        </fieldset>
-        <p>
-        <input type="submit" class="btn btn-primary" value="Entrar">
-        <a class="btn btn-primary" href="@routes.LoginController.registroUsuario()">Registro</a></p>
-    }
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        @helper.form(action = routes.LoginController.login()) {
+            <fieldset>
+                @helper.inputText(loginForm("login"), '_label -> "Login")
+                @helper.inputPassword(loginForm("password"), '_label -> "Contraseña")
+            </fieldset>
+            <p>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            <a class="btn btn-link" href="@routes.LoginController.registroUsuario()">Registro</a></p>
+        }
+    </div>
+    <div class="col-md-4"></div>
+   </div>
 }

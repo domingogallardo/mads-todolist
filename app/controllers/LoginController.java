@@ -36,7 +36,7 @@ public class LoginController extends Controller {
             return badRequest(formRegistro.render(registroForm, "El login ya existe"));
         else if (usuario.password == null) {
             LoginService.inicializaPasswordUsuario(registro.login, registro.password);
-            return ok(saludo.render(registro.login + ". Ya tienes contraseña."));
+            return ok(saludo.render(registro.login + ". Contraseña inicializada."));
         } else {
             LoginService.registraNuevoUsuario(registro.login, registro.password);
             return ok(saludo.render(registro.login + ". Bienvenido"));
