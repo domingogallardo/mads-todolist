@@ -32,7 +32,7 @@ public class LoginController extends Controller {
             return badRequest(formRegistro.render(registroForm, "No coincide la contraseña y la confirmación"));
         }
         Usuario nuevoUsuario = new Usuario(registro.login, registro.password);
-        nuevoUsuario = UsuariosService.registraUsuario(nuevoUsuario);
+        nuevoUsuario = LoginService.registraUsuario(nuevoUsuario);
         if (nuevoUsuario == null) {
             return badRequest(formRegistro.render(registroForm, "El login ya existe"));
         } else return ok(saludo.render(registro.login));
@@ -49,7 +49,7 @@ public class LoginController extends Controller {
             return badRequest(formLogin.render(loginForm, "Hay errores en el formulario"));
         }
         Login login = loginForm.get();
-        Usuario usuario = UsuariosService.login(login.login, login.password);
+        Usuario usuario = LoginService.login(login.login, login.password);
         if (usuario == null)
             return badRequest(formLogin.render(loginForm, "Error al logearse"));
         return ok(saludo.render(usuario.login + " - " + usuario.nombre));
