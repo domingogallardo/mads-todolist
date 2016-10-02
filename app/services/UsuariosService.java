@@ -25,11 +25,11 @@ public class UsuariosService {
         return usuario;
     }
 
-    public static Usuario findUsuario(String id) {
+    public static Usuario findUsuario(Integer id) {
         return UsuarioDAO.find(id);
     }
 
-    public static void deleteUsuario(String id) {
+    public static void deleteUsuario(Integer id) {
         UsuarioDAO.delete(id);
     }
 

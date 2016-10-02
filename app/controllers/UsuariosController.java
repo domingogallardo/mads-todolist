@@ -53,7 +53,7 @@ public class UsuariosController extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public Result detalleUsuario(String id) {
+    public Result detalleUsuario(Integer id) {
         Usuario usuario = UsuariosService.findUsuario(id);
         if (usuario == null) {
             return notFound("Usuario no encontrado");
@@ -83,7 +83,7 @@ public class UsuariosController extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public Result formularioEditaUsuario(String id) {
+    public Result formularioEditaUsuario(Integer id) {
         Usuario usuario = UsuariosService.findUsuario(id);
         if (usuario == null) {
             return notFound("Usuario no encontrado");
@@ -95,7 +95,7 @@ public class UsuariosController extends Controller {
     }
 
     @Transactional
-    public Result borraUsuario(String id) {
+    public Result borraUsuario(Integer id) {
         Logger.debug("Voy a borrar el usuario: " + id);
         UsuariosService.deleteUsuario(id);
         flash("aviso", "Usuario " + id + " borrado correctamente");
