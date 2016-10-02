@@ -49,9 +49,11 @@ public class LoginController extends Controller {
             return badRequest(formLogin.render(loginForm, "Hay errores en el formulario"));
         }
         Login login = loginForm.get();
-        Usuario usuario = LoginService.login(login.login, login.password);
-        if (usuario == null)
-            return badRequest(formLogin.render(loginForm, "Error al logearse"));
-        return ok(saludo.render(usuario.login + " - " + usuario.nombre));
+        try {
+            Usuario usuario = LoginService.login(login.login, login.password);
+            return ok(saludo.render(usuario.login + " - " + usuario.nombre));
+        } catch (LoginException ex) {
+            return badRequest(formLogin.render(loginForm, ex.getMessage()));
+        }
     }
 }
