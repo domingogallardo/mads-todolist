@@ -21,12 +21,21 @@ public class LoginService {
         return usuario;
     }
 
-    public static Usuario registraUsuario(Usuario nuevoUsuario) {
-        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(nuevoUsuario.login);
-        if (usuarioIgualLogin == null || usuarioIgualLogin.password == null) {
-            return UsuariosService.grabaUsuario(nuevoUsuario);
-        }
-        // el login ya existe y tiene contraseña
-        else return null;
+    public static Usuario inicializaPasswordUsuario(String login, String password) {
+        Usuario usuario = UsuarioDAO.findUsuarioPorLogin(login);
+        if (usuario == null)
+            throw new LoginException("Imposible inicializar password: no existe login");
+        if (usuario.password != null)
+            throw new LoginException("Imposible inicializar password: ya existe password");
+        usuario.password = password;
+        return UsuarioDAO.update(usuario);
+    }
+
+    public static Usuario registraNuevoUsuario(String login, String password) {
+        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(login);
+        if (usuarioIgualLogin != null)
+            throw new LoginException("Imposible registrar un usuario: login ya existe");
+        Usuario usuario = new Usuario(login, password);
+        return UsuariosService.grabaUsuario(usuario);
     }
 }

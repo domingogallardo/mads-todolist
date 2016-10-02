@@ -45,7 +45,7 @@ public class Usuario {
             SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
             fechaStr = formateador.format(fechaNacimiento);
         }
-        return String.format("Usuario id: %s login: %s passworld: %s nombre: %s " +
+        return String.format("Usuario id: %s login: %s password: %s nombre: %s " +
                       "apellidos: %s eMail: %s fechaNacimiento: %s",
                       id, login, password, nombre, apellidos, eMail, fechaStr);
     }
