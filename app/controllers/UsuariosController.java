@@ -44,6 +44,8 @@ public class UsuariosController extends Controller {
         }
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
+
+        // Se comprueba que no existe un usuario con el mismo login
         if (UsuariosService.findUsuarioPorLogin(usuario.login) != null) {
             return badRequest(formCreacionUsuario.render(usuarioForm, "Login ya existente"));
         }
@@ -71,6 +73,11 @@ public class UsuariosController extends Controller {
         }
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
+
+        // Se comprueba que no existe un usuario con el mismo login
+        if (UsuariosService.findUsuarioPorLogin(usuario.login) != null) {
+            return badRequest(formCreacionUsuario.render(usuarioForm, "Login ya existente"));
+        }
 
         // Se recupera la contraseña del usuario y se actualiza en el
         // usuario modificado

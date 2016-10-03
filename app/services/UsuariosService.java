@@ -14,13 +14,16 @@ public class UsuariosService {
     // El login de usuario no debe estar den la BD
     public static Usuario grabaUsuario(Usuario usuario) {
         Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(usuario.login);
-        if (usuarioIgualLogin != null) {
-            return null;
-        }
-        else return UsuarioDAO.create(usuario);
+        if (usuarioIgualLogin != null)
+            throw new UsuariosException("Login ya existente: " + usuario.login);
+        return UsuarioDAO.create(usuario);
     }
 
+    // El login de usuario no debe estar den la BD
     public static Usuario modificaUsuario(Usuario usuario) {
+        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(usuario.login);
+        if (usuarioIgualLogin != null)
+            throw new UsuariosException("Login ya existente: " + usuario.login);
         UsuarioDAO.update(usuario);
         return usuario;
     }
