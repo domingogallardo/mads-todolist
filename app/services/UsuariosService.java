@@ -19,10 +19,10 @@ public class UsuariosService {
         return UsuarioDAO.create(usuario);
     }
 
-    // El login de usuario no debe estar den la BD
+    // El login de usuario no debe estar en la BD
     public static Usuario modificaUsuario(Usuario usuario) {
-        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(usuario.login);
-        if (usuarioIgualLogin != null)
+        Usuario existente = UsuarioDAO.findUsuarioPorLogin(usuario.login);
+        if (existente != null && existente.id != usuario.id)
             throw new UsuariosException("Login ya existente: " + usuario.login);
         UsuarioDAO.update(usuario);
         return usuario;

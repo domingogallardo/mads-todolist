@@ -75,7 +75,9 @@ public class UsuariosController extends Controller {
         Logger.debug("Usuario a grabar: " + usuario.toString());
 
         // Se comprueba que no existe un usuario con el mismo login
-        if (UsuariosService.findUsuarioPorLogin(usuario.login) != null) {
+        // y distinto id
+        Usuario existente = UsuariosService.findUsuarioPorLogin(usuario.login);
+        if (existente != null && existente.id != usuario.id) {
             return badRequest(formCreacionUsuario.render(usuarioForm, "Login ya existente"));
         }
 
