@@ -24,11 +24,12 @@ public class UsuariosController extends Controller {
 
     @Transactional(readOnly = true)
     public Result listaUsuarios() {
-        String mensaje = flash("grabaUsuario");
-        if (mensaje == null)
-            mensaje = flash("grabaUsuarioModificado");
+        String aviso = flash("aviso");
+        String error = flash("error");
+        Logger.debug("Menasaje de aviso: " + aviso);
+        Logger.debug("Mensaje de error: " + error);
         List<Usuario> usuarios = UsuariosService.findAllUsuarios();
-        return ok(listaUsuarios.render(usuarios, mensaje));
+        return ok(listaUsuarios.render(usuarios, aviso, error));
     }
 
     public Result formularioNuevoUsuario() {
@@ -44,7 +45,7 @@ public class UsuariosController extends Controller {
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
         usuario = UsuariosService.grabaUsuario(usuario);
-        flash("grabaUsuario", "El usuario se ha grabado correctamente");
+        flash("aviso", "El usuario se ha grabado correctamente");
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 
@@ -64,7 +65,7 @@ public class UsuariosController extends Controller {
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
         usuario = UsuariosService.modificaUsuario(usuario);
-        flash("grabaUsuarioModificado", "Usuario " + usuario.id + " modificado");
+        flash("aviso", "Usuario " + usuario.id + " modificado");
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
     }
 
@@ -78,5 +79,19 @@ public class UsuariosController extends Controller {
             usuarioForm = usuarioForm.fill(usuario);
             return ok(formModificacionUsuario.render(usuarioForm, ""));
         }
+    }
+
+    @Transactional
+    public Result borraUsuario(String id) {
+        Logger.debug("Voy a borrar el usuario: " + id);
+        try {
+            UsuariosService.deleteUsuario(id);
+            flash("aviso", "Usuario " + id + " borrado correctamente");
+        } catch (Exception ex) {
+            String errorMsg = ex.getMessage();
+            System.err.println("Excepción: " + errorMsg);
+            flash("error", errorMsg);
+        }
+        return ok();
     }
 }
