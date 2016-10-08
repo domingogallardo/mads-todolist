@@ -35,4 +35,22 @@ public class UsuariosService {
         Logger.debug("Numero de usuarios: " + lista.size());
         return lista;
     }
+
+    public static Usuario login(String login, String password) {
+        Usuario usuario = UsuarioDAO.findUsuarioPorLogin(login);
+        if (usuario == null)
+            return null;
+        else if (!password.equals(usuario.password))
+            return null;
+        else return usuario;
+    }
+
+    public static Usuario registraUsuario(Usuario nuevoUsuario) {
+        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(nuevoUsuario.login);
+        if (usuarioIgualLogin == null) {
+            return grabaUsuario(nuevoUsuario);
+        }
+        // el login ya existe
+        else return null;
+    }
 }
