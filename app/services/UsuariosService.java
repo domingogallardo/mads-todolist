@@ -10,8 +10,14 @@ import java.util.ArrayList;
 import models.*;
 
 public class UsuariosService {
+
+    // El login de usuario no debe estar den la BD
     public static Usuario grabaUsuario(Usuario usuario) {
-        return UsuarioDAO.create(usuario);
+        Usuario usuarioIgualLogin = UsuarioDAO.findUsuarioPorLogin(usuario.login);
+        if (usuarioIgualLogin != null) {
+            return null;
+        }
+        else return UsuarioDAO.create(usuario);
     }
 
     public static Usuario modificaUsuario(Usuario usuario) {
@@ -31,6 +37,10 @@ public class UsuariosService {
         List<Usuario> lista = UsuarioDAO.findAll();
         Logger.debug("Numero de usuarios: " + lista.size());
         return lista;
+    }
+
+    public static Usuario findUsuarioPorLogin(String login) {
+        return UsuarioDAO.findUsuarioPorLogin(login);
     }
 
     public static Usuario login(String login, String password) {

@@ -44,6 +44,9 @@ public class UsuariosController extends Controller {
         }
         Usuario usuario = usuarioForm.get();
         Logger.debug("Usuario a grabar: " + usuario.toString());
+        if (UsuariosService.findUsuarioPorLogin(usuario.login) != null) {
+            return badRequest(formCreacionUsuario.render(usuarioForm, "Login ya existente"));
+        }
         usuario = UsuariosService.grabaUsuario(usuario);
         flash("aviso", "El usuario se ha grabado correctamente");
         return redirect(controllers.routes.UsuariosController.listaUsuarios());
