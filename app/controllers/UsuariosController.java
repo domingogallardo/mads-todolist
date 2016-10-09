@@ -65,31 +65,6 @@ public class UsuariosController extends Controller {
         }
     }
 
-    @Transactional
-    public Result grabaUsuarioModificado() {
-        Form<Usuario> usuarioForm = formFactory.form(Usuario.class).bindFromRequest();
-        if (usuarioForm.hasErrors()) {
-            return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
-        }
-        Usuario usuario = usuarioForm.get();
-        Logger.debug("Usuario a grabar: " + usuario.toString());
-
-        // Se comprueba que no existe un usuario con el mismo login
-        // y distinto id
-        Usuario existente = UsuariosService.findUsuarioPorLogin(usuario.login);
-        if (existente != null && existente.id != usuario.id) {
-            return badRequest(formCreacionUsuario.render(usuarioForm, "Login ya existente"));
-        }
-
-        // Se recupera la contraseña del usuario y se actualiza en el
-        // usuario modificado
-        Usuario usuarioSinModificar = UsuariosService.findUsuario(usuario.id);
-        usuario.password = usuarioSinModificar.password;
-
-        usuario = UsuariosService.modificaUsuario(usuario);
-        flash("aviso", "Usuario " + usuario.id + " modificado");
-        return redirect(controllers.routes.UsuariosController.listaUsuarios());
-    }
 
     @Transactional(readOnly = true)
     public Result formularioEditaUsuario(Integer id) {
@@ -102,6 +77,33 @@ public class UsuariosController extends Controller {
             return ok(formModificacionUsuario.render(usuarioForm, ""));
         }
     }
+
+    @Transactional
+    public Result grabaUsuarioModificado() {
+        Form<Usuario> usuarioForm = formFactory.form(Usuario.class).bindFromRequest();
+        if (usuarioForm.hasErrors()) {
+            return badRequest(formModificacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+        }
+        Usuario usuario = usuarioForm.get();
+        Logger.debug("Usuario a grabar: " + usuario.toString());
+
+        // Se comprueba que no existe un usuario con el mismo login
+        // y distinto id
+        Usuario existente = UsuariosService.findUsuarioPorLogin(usuario.login);
+        if (existente != null && existente.id != usuario.id) {
+            return badRequest(formModificacionUsuario.render(usuarioForm, "Login ya existente"));
+        }
+
+        // Se recupera la contraseña del usuario y se actualiza en el
+        // usuario modificado
+        Usuario usuarioSinModificar = UsuariosService.findUsuario(usuario.id);
+        usuario.password = usuarioSinModificar.password;
+
+        usuario = UsuariosService.modificaUsuario(usuario);
+        flash("aviso", "Usuario " + usuario.id + " modificado");
+        return redirect(controllers.routes.UsuariosController.listaUsuarios());
+    }
+
 
     @Transactional
     public Result borraUsuario(Integer id) {
