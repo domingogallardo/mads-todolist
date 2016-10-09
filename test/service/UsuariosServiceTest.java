@@ -38,7 +38,7 @@ public class UsuariosServiceTest {
     public void initData() throws Exception {
         databaseTester = new JndiDatabaseTester("DefaultDS");
         IDataSet initialDataSet = new FlatXmlDataSetBuilder().build(new
-        FileInputStream("test/resources/usuario_dataset.xml"));
+        FileInputStream("test/resources/usuarios_dataset.xml"));
         databaseTester.setDataSet(initialDataSet);
         databaseTester.onSetup();
     }
