@@ -8,6 +8,7 @@ import org.dbunit.dataset.xml.*;
 import java.io.FileInputStream;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import java.util.Set;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -82,6 +83,14 @@ public class ListadoTareasTest {
             Tarea tarea = TareaDAO.find(1);
             Usuario usuario = UsuarioDAO.find(1);
             assertEquals(tarea.usuario, usuario);
+        });
+    }
+
+    @Test
+    public void obtenerTareasDeUsuario() {
+        jpa.withTransaction(() -> {
+            Usuario usuario = UsuarioDAO.find(1);
+            assertEquals(usuario.tareas.size(), 3);
         });
     }
 }
