@@ -4,8 +4,8 @@ import java.util.Date;
 import javax.persistence.*;
 import play.data.validation.Constraints;
 import play.data.format.*;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,7 +25,7 @@ public class Usuario {
     @Temporal(TemporalType.DATE)
     public Date fechaNacimiento;
     @OneToMany(mappedBy="usuario")
-    public Set<Tarea> tareas = new HashSet<Tarea>();
+    public List<Tarea> tareas = new ArrayList<Tarea>();
 
     // Un constructor vacío necesario para JPA
     public Usuario() {}
