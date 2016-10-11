@@ -31,16 +31,15 @@ public class LoginController extends Controller {
         if (!registro.password.equals(registro.confirmacion)) {
             return badRequest(formRegistro.render(registroForm, "No coincide la contraseña y la confirmación"));
         }
-        Usuario usuario = UsuariosService.findUsuarioPorLogin(registro.login);
-        if (usuario != null && usuario.password != null)
-            return badRequest(formRegistro.render(registroForm, "El login ya existe"));
-        else if (usuario.password == null) {
-            LoginService.inicializaPasswordUsuario(registro.login, registro.password);
-            return ok(saludo.render(registro.login + ". Contraseña inicializada."));
-        } else {
+        Usuario existente = UsuariosService.findUsuarioPorLogin(registro.login);
+        if (existente == null) {
             LoginService.registraNuevoUsuario(registro.login, registro.password);
             return ok(saludo.render(registro.login + ". Bienvenido"));
-        }
+        } else if (existente.password == null) {
+            LoginService.inicializaPasswordUsuario(registro.login, registro.password);
+            return ok(saludo.render(registro.login + ". Contraseña inicializada."));
+        } else // existente.password != null
+            return badRequest(formRegistro.render(registroForm, "El login ya existe"));
     }
 
     public Result formularioLogin() {
