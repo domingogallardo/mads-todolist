@@ -22,5 +22,7 @@ POST    /registro                   controllers.LoginController.registroUsuario(
 GET     /login                      controllers.LoginController.formularioLogin()
 POST    /login                      controllers.LoginController.login()
 
+GET     /usuarios/:id/tareas        controllers.TareasController.listaTareas(id: Integer)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
