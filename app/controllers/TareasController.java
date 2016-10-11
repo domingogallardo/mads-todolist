@@ -22,11 +22,12 @@ public class TareasController extends Controller {
         String error = flash("error");
         Logger.debug("Menasaje de aviso: " + aviso);
         Logger.debug("Mensaje de error: " + error);
-        List<Tarea> tareas = TareasService.listaTareasUsuario(usuarioId);
-        String descripcion = "";
-        for (Tarea t: tareas) {
-            descripcion += " - " + t.descripcion;
+        Usuario usuario = UsuariosService.findUsuario(usuarioId);
+        if (usuario == null) {
+            return notFound("Usuario no encontrado");
+        } else {
+            List<Tarea> tareas = TareasService.listaTareasUsuario(usuarioId);
+            return ok(listaTareas.render(tareas, usuario, aviso, error));
         }
-        return ok("Tareas: " + descripcion);
     }
 }
