@@ -33,6 +33,9 @@ public class UsuariosService {
     }
 
     public static void deleteUsuario(Integer id) {
+        if (UsuarioDAO.find(id) == null) {
+            throw new UsuariosException("No existe usuario a borrar: " + id);
+        }
         UsuarioDAO.delete(id);
     }
 
