@@ -7,6 +7,7 @@ import org.junit.*;
 import org.dbunit.*;
 import org.dbunit.dataset.*;
 import org.dbunit.dataset.xml.*;
+import org.dbunit.operation.*;
 import java.io.FileInputStream;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -39,6 +40,7 @@ public class UsuarioDaoDbUnitTest {
         IDataSet initialDataSet = new FlatXmlDataSetBuilder().build(new
         FileInputStream("test/resources/usuarios_dataset.xml"));
         databaseTester.setDataSet(initialDataSet);
+        databaseTester.setTearDownOperation(DatabaseOperation.DELETE);
         databaseTester.onSetup();
     }
 
